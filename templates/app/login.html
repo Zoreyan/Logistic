@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+    <!-- <div class="container">
+        <div class="col-md-6 mx-auto mt-5">
+            <div class="bg-primary py-5 px-4 px-sm-5">
+                <h3 class="text-center">LOGIN</h3>
+                <form class="py-5" method="post">
+                {% csrf_token %}
+                    <div class="form-group">
+                        {{ form.username }}
+                    </div>
+                    <div class="form-group">
+                        {{ form.password }}
+                    </div>
+
+                    <div>
+                        <button class="btn btn-dark btn-block border-0 py-3" type="submit">Login</button>
+                    </div>
+                </form>
+                <p  class="text-center"><a href="{% url 'signup' %}" style="color: white;"> or SignUp</a></p>
+            </div>
+        </div>
+    </div> -->
+    <div class="container">
+        <form class="col-md-3 mx-auto mt-5" method="post">
+        {% csrf_token %}
+            <h1 class="h3 mb-3 fw-normal text-center">Вход</h1>
+        
+            <div class="form-floating mt-2">
+                {{ form.username }}
+              <label for="floatingInput">Имя пользователя</label>
+            </div>
+            <div class="form-floating mt-2">
+                {{ form.password }}
+              <label for="floatingPassword">Пароль</label>
+            </div>
+        
+          
+            <button class="w-100 btn btn-lg btn-primary mt-2" type="submit">Вход</button>
+            <p class="mt-5 mb-3 text-body-secondary text-center">Нет аккаунта? <a href="{% url 'signup' %}">Регистрация</a></p>
+
+      </form>
+    </div>
+
+{% endblock %}

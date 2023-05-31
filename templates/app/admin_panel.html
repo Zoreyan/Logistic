@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if request.user.is_superuser %}
+<div class="container">
+    <div class="col-md-9 mx-auto mt-5 border">
+      <div class="py-5 px-4 px-sm-5">
+        <h3 class="text-center">Все заказы</h3>
+        
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Описание</th>
+              <th scope="col">Откуда</th>
+              <th scope="col">Куда</th>
+              <th scope="col">Вес</th>
+              <th scope="col">Грузовик</th>
+              <th scope="col">Действие</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for data in order_data %}
+            <tr>
+  
+              <td>
+                {{ data.title }}
+              </td>
+              <td>
+                {{ data.origin }}
+              </td>
+              <td>
+                {{ data.destination }}
+              </td>
+              <td>
+                {{ data.weight }}
+              </td>
+              <td>
+                {{ data.assigned_truck }}
+              </td>
+              <td>
+                <a href="{% url 'order-delete' data.id %}" class="btn btn-danger">Удалить</a>
+              </td>
+            </tr>
+          {% empty %}
+          <p class="text-center">Список заказов пуст</p>
+          {% endfor %}
+  
+          </tbody>
+        </table>
+  
+  
+  
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container">
+    <div class="col-md-11 mx-auto mt-5 border">
+      <div class="py-5 px-4 px-sm-5">
+        <h3 class="text-center">Все Водители</h3>
+        
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Ф.И.О</th>
+              <th scope="col">Контактный номер</th>
+              <th scope="col">Электронная почта</th>
+              <th scope="col">Действие</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for data in driver_data %}
+            <tr>
+  
+              <td>
+                <a href="{% url 'driver-dashboard' data.user.id %}">@{{ data.user.username }}</a>
+              </td>
+              <td>
+                {{ data.name }}
+              </td>
+              <td>
+                {{ data.phone_number }}
+              </td>
+              <td>
+                {{ data.email }}
+              </td>
+              <td>
+                <a href="{% url 'driver-delete' data.id %}" class="btn btn-danger">Уволить</a>
+              </td>
+            </tr>
+          {% empty %}
+          <p class="text-center">Список водителей пуст</p>
+          {% endfor %}
+  
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="col-md-11 mx-auto mt-5 border">
+      <div class="py-5 px-4 px-sm-5">
+        <h3 class="text-center">Все Грузовики</h3>
+        
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">id</th>
+              <th scope="col">Модель</th>
+              <th scope="col">Номерной знак</th>
+              <th scope="col">Вместимость</th>
+              <th scope="col">Водитель</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for data in truck_data %}
+            <tr>
+              <td>
+                {{ data.id }}
+              </td>
+              <td>
+                {{ data.model }}
+              </td>
+              <td>
+                {{ data.plate_number }}
+              </td>
+              <td>
+                {{ data.capacity }}
+              </td>
+              <td>
+                <a href="{% url 'driver-dashboard' data.driver.id %}">@{{ data.driver.username }}</a>
+              </td>
+            </tr>
+          {% empty %}
+          <p class="text-center">Список грузовиков пуст</p>
+          {% endfor %}
+  
+          </tbody>
+        </table>
+  
+  
+  
+      </div>
+    </div>
+  </div>
+{% else %}
+<h3>Вы не являетесь администратором</h3>
+{% endif %}
+{% endblock %}

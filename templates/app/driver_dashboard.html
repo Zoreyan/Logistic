@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <div class="col-md-6 mx-auto mt-5 border">
+        <div class="py-5 px-4 px-sm-5">
+            <h3 class="text-center">Ваши данные водителя</h3>
+            {% if driver_data %}
+            <ul class="list-group mb-3 mt-3">
+
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="my-0">Ф.И.О</h6>
+                    <small class="text-body-secondary">{{ driver_data.name }}</small>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="my-0">Контактный номер</h6>
+                    <small class="text-body-secondary">{{ driver_data.phone_number }}</small>
+                  </div>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-sm">
+                  <div>
+                    <h6 class="my-0">Электронная почта</h6>
+                    <small class="text-body-secondary">{{ driver_data.email }}</small>
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div>
+                    <h6 class="my-0">Лицензия Лицевая</h6>
+                    {% if driver_data.license_front %}
+                    <img class="img-thumbnail mx-auto d-block" src="{{ driver_data.license_front.url }}" alt="">
+                    {% endif %}
+                  </div>
+                </li>
+                <li class="list-group-item">
+                  <div>
+                    <h6 class="my-0">Лицензия Задняя</h6>
+                    {% if driver_data.license_back %}
+                    <img class="img-thumbnail mx-auto d-block" src="{{ driver_data.license_back.url }}" alt="">
+                    {% endif %}
+                  </div>
+                </li>
+                <p class="text-center mt-5">
+                  <a href="{% url 'driver-update' request.user.id %}" class="btn btn-warning">Изменить</a>
+                </p>
+              </ul>
+              {% else %}
+              <ul class="list-group mb-3 mt-3">
+                <li class="list-group">
+                  <div>
+                    <h6 class="my-0 text-center">Вы еще не заполняли форму</h6>
+                    <p class="text-center">
+                      <a href="{% url 'driver-create' %}" class="btn btn-info mt-4">Заполнить форму</a>
+                    </p>
+                  </div>
+                </li>
+                
+              </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="col-md-6 mx-auto mt-5 border">
+        <div class="py-5 px-4 px-sm-5">
+            <h3 class="text-center">Данные грузовика</h3>
+            {% if truck_data %}
+            <ul class="list-group mb-3 mt-3">
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0">Номерной знак</h6>
+                  <small class="text-body-secondary">{{ truck_data.plate_number }}</small>
+                </div>
+              </li>
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0">Модель</h6>
+                  <small class="text-body-secondary">{{ truck_data.model }}</small>
+                </div>
+              </li>
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0">Вместимость</h6>
+                  <small class="text-body-secondary">{{ truck_data.capacity }} литр.</small>
+                </div>
+              </li>
+              <li class="list-group-item">
+                  <div>
+                    <h6 class="my-0">Изображение</h6>
+                    {% if truck_data.image %}
+                    <img class="img-thumbnail mx-auto d-block" src="{{ truck_data.image.url }}" alt="">
+                    {% endif %}
+                  </div>
+                </li>
+                <p class="text-center mt-5">
+                  <a href="{% url 'truck-update' request.user.id %}" class="btn btn-warning">Изменить</a>
+                </p>
+            </ul>
+              {% else %}
+              <ul class="list-group mb-3 mt-3">
+                <li class="list-group">
+                  <div>
+                    <h6 class="my-0 text-center">Вы еще не заполняли форму</h6>
+                    <p class="text-center">
+                      <a href="{% url 'truck-create' %}" class="btn btn-info mt-4">Заполнить форму</a>
+                    </p>
+                  </div>
+                </li>
+                
+              </ul>
+            {% endif %}
+            
+        </div>
+    </div>
+</div>
+
+<div class="container">
+  <div class="col-md-9 mx-auto mt-5 border">
+    <div class="py-5 px-4 px-sm-5">
+      <h3 class="text-center">Ваши заказы</h3>
+      
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Описание</th>
+            <th scope="col">Откуда</th>
+            <th scope="col">Куда</th>
+            <th scope="col">Вес</th>
+            <th scope="col">Грузовик</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in order_data %}
+          <tr>
+
+            <td>
+              {{ data.title }}
+            </td>
+            <td>
+              {{ data.origin }}
+            </td>
+            <td>
+              {{ data.destination }}
+            </td>
+            <td>
+              {{ data.weight }}
+            </td>
+            <td>
+              {{ data.assigned_truck }}
+            </td>
+          </tr>
+        {% empty %}
+        <p class="text-center">У вас еще нет ни одного заказа :(</p>
+        {% endfor %}
+
+        </tbody>
+      </table>
+
+
+
+    </div>
+  </div>
+</div>
+{% endblock %}

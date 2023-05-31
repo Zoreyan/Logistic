@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div class="container">
+    <div class="col-md-6 mx-auto mt-5 border">
+        <div class="py-5 px-4 px-sm-5">
+            <h3 class="text-center">Ваши данные водителя</h3>
+            <form class="py-2" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="driverName" class="form-label">Ф.И.О</label>
+                  {{ form.name }}
+              </div>
+                <div class="mb-3">
+                    <label for="driverLicenseFront" class="form-label">Лицензия Лицевая</label>
+                    {{ form.license_front }}
+                </div>
+                <div class="mb-3">
+                  <label for="driverLicenseBack" class="form-label">Лицензия Задняя</label>
+                  {{ form.license_back }}
+              </div>
+                  <div class="mb-3">
+                    <label for="driverPhone" class="form-label">Контактный номер</label>
+                    {{ form.phone_number }}
+                  </div>
+                  <div class="mb-3">
+                    <label for="driverEmail" class="form-label">Электронная почта</label>
+                    {{ form.email }}
+                  </div>
+
+                  <p class="text-center mt-4">
+                    <button type="submit" class="btn btn-success" name="driver">Сохранить</button>
+                  </p>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

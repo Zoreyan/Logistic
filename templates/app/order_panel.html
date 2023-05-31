@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="col-md-6 mx-auto mt-5 border">
+        <div class="py-5 px-4 px-sm-5">
+            <h3 class="text-center">Оформление заказа</h3>
+
+            <form class="py-2" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="orderPhone" class="form-label">Ваш контактный номер</label>
+                  {{ order_form.phone_number }}
+                </div>
+                <div class="mb-3">
+                    <label for="orderTitle" class="form-label">Краткое описание товара</label>
+                    {{ order_form.title }}
+                  </div>
+                  <div class="mb-3">
+                    <label for="orderOrigin" class="form-label">Откуда</label>
+                    {{ order_form.origin }}
+                  </div>
+                  <div class="mb-3">
+                    <label for="orderDestination" class="form-label">Куда</label>
+                    {{ order_form.destination }}
+                  </div>
+                  <div class="mb-3">
+                    <label for="orderWeight" class="form-label">Вес - кг*</label>
+                    {{ order_form.weight }}
+                  </div>
+                  <div class="mb-3">
+                    <label for="orderTruck" class="form-label">Грузовик</label>
+                    {{ order_form.assigned_truck }}
+                  </div>
+
+                  <button type="submit" class="btn btn-success" name="truck">Оформить</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+  <div class="col-md-9 mx-auto mt-5 border">
+    <div class="py-5 px-4 px-sm-5">
+      <h3 class="text-center">Ваши заказы</h3>
+      
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Описание</th>
+            <th scope="col">Откуда</th>
+            <th scope="col">Куда</th>
+            <th scope="col">Вес</th>
+            <th scope="col">Грузовик</th>
+            <th scope="col">Действие</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for data in shipments %}
+          <tr>
+            <td>
+              {{ data.title }}
+            </td>
+            <td>
+              {{ data.origin }}
+            </td>
+            <td>
+              {{ data.destination }}
+            </td>
+            <td>
+              {{ data.weight }}
+            </td>
+            <td>
+              {{ data.assigned_truck }}
+            </td>
+            <td>
+              <a href="{% url 'order-delete' data.id %}" class="btn btn-danger">Удалить</a>
+            </td>
+          </tr>
+        {% empty %}
+        <p class="text-center">У вас еще нет ни одного заказа :(</p>
+        {% endfor %}
+
+        </tbody>
+      </table>
+
+
+
+    </div>
+  </div>
+</div>
+    
+{% endblock %}
